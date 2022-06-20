@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
-
+import Navbar from './components/navbar';
+import Home from './components/home';
+import AddForm from './components/addform';
+import EditForm from './components/editform';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      < Navbar />
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/add' element={<AddForm />}/>
+        <Route path='/edit/:id' element={<EditForm />}/>
+      </Routes>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            fontSize: '1 rem',
+          },
+        }}
+      />
     </div>
   );
 }
