@@ -1,5 +1,5 @@
 import {createStore} from 'redux';
-import rootReducer from './redux/reducer/todoReducer';
+import rootReducer from './reducer/todoReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 // import { persistStore, persistReducer } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';

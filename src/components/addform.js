@@ -1,11 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React,{useState} from 'react';
 import { useSelector ,useDispatch } from 'react-redux';
 import {Link,useNavigate} from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import toast from 'react-hot-toast';
-
 import './addform.css';
 
 const addform = () => {

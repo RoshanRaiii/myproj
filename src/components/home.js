@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Tooltip, Popconfirm, Space } from 'antd';
 import { EditOutlined ,DeleteOutlined } from '@ant-design/icons';
 
-
+//Read component for todo list
 const home = () => {
   
   const  todo = useSelector((state)=>state);
@@ -20,7 +20,8 @@ const home = () => {
   const cancel = (e) => {
     console.log(e);
   };
-
+  
+ //handleClear is used for deleting all todo
   const handleClear=()=>{
     dispatch({type:'DeleteAll'});
     toast.success('all task deleted successfully');
