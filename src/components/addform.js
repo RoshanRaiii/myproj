@@ -11,7 +11,7 @@ import './addform.css';
 const addform = () => {
   const [title,setTitle] = useState('');
   const [description, setDescription]= useState('');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  
 const  todo = useSelector((state)=>state);
 const dispatch = useDispatch();
 const navigate =useNavigate();
@@ -23,9 +23,8 @@ const navigate =useNavigate();
      const data = {
          id : todo[todo.length -1].id+1,
          title,
-         description
+         description,
         };
-        console.log(data);
         dispatch({type:'AddTodo',payload:data});
         navigate('/');
         toast.success("successfully added");
@@ -63,7 +62,7 @@ const navigate =useNavigate();
 
       <Form.Item
       >
-        <Button type="primary"  value="add todo"  htmlType="submit" onClick={handleSubmit}>
+        <Button type="primary"  value="add todo"  onClick={handleSubmit}>
           Submit
         </Button>{' '}
         <Link to="/" >

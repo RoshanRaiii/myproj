@@ -6,18 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import todoReducer from './redux/reducer/todoReducer';
-import { composeWithDevTools } from 'redux-devtools-extension';
-const store = createStore(todoReducer, composeWithDevTools()); 
+import store from "./store";
+// import { PersistGate } from 'redux-persist/integration/react';
+// import { persistor } from './store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+    {/* <PersistGate persistor={persistor}> */}
   <React.StrictMode>
     <Router>
     <App />
     </Router>
   </React.StrictMode>
+  {/* </PersistGate> */}
   </Provider>
 );
 

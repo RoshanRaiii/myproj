@@ -1,12 +1,52 @@
-import React from 'react';
-import {Link ,useParams} from 'react-router-dom';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import {Link ,useParams, useNavigate} from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import { toast } from 'react-hot-toast';
 const editform = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+   
     const {id}= useParams();
-  return (
+    const todos = useSelector((state) => state);
+    const currentTodo = todos.find((todo)=> todo.id === parseInt(id));
+
+    useEffect(()=>{
+         setTitle(currentTodo.title);
+         setDescription(currentTodo.description);
+        }
+        ,[currentTodo]);
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription]= useState('');
+
+
+    const dispatch = useDispatch();
+const navigate =useNavigate();
+
+
+const handleSubmit =(e)=>{
+    if (!title || !description) {
+      return toast.error("Please fill in all fields!!");
+    }
+   
+     const data = {
+         id : parseInt(id),
+         title,
+         description
+        };
+        dispatch({type:'UpdateTodo',payload:data});
+        navigate('/');
+        toast.success("successfully updated");
+        
+  };
+
+    
+    return (
     <div className='container col'>
-    <br/>
+        
+        { currentTodo ? (
+            <>
+            <br/>
     <div className='justify-content-center row'>
     <h1>Edit ToDo {id}</h1>
     </div>
@@ -20,7 +60,6 @@ const editform = () => {
     autoComplete="off"
   >
     <Form.Item
-      name="Title"
       rules={[
         {
           required: true,
@@ -28,24 +67,21 @@ const editform = () => {
         },
       ]}
     >
-      <Input  placeholder='Title' size='lg'/>
+      <Input  placeholder={title} value={title} onChange={e=> setTitle(e.target.value)} size='lg'/>
     </Form.Item>
 
     <Form.Item
-      name="description"
       rules={[
         {
-          required: true,
           message: 'Please description!',
         },
       ]}
     >
-      <Input placeholder='Description'  size='lg'/>
+      <Input placeholder={description} value={description} onChange={(e)=>setDescription(e.target.value)} size='lg'/>
     </Form.Item>
 
-    <Form.Item
-    >
-      <Button type="primary" value="add todo" htmlType="submit">
+    <Form.Item >
+      <Button type="primary" value="update todo" onClick={handleSubmit}>
         Update
       </Button>{' '}
       <Link to="/" >
@@ -56,8 +92,15 @@ const editform = () => {
     </Form.Item>
   </Form>
   </div>
+            </>
+        ):(
+            <h1> this does not exist</h1>
+        )
+    }
+    
   </div>
   )
 }
+
 
 export default editform;

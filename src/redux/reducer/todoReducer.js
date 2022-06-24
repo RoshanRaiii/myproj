@@ -18,7 +18,18 @@ const todoReducer = (state = initialState,action)=>{
         case 'AddTodo':
             state=[...state,action.payload];
             return state;
-      default:
+        case 'UpdateTodo':
+            const updateState = state.map((todo)=>todo.id === action.payload.id ? action.payload : todo);    
+            state= updateState;
+            return state;
+        case 'DeleteTodo':
+             const filterTodo = state.filter(todo=>todo.id!== action.payload ? todo : null);
+             state = filterTodo;
+             return state;
+        case 'DeleteAll':
+              state = [];
+             return state;
+        default:
         return state;  
     }
 };

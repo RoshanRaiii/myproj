@@ -1,23 +1,53 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip, Popconfirm, Space } from 'antd';
 import { EditOutlined ,DeleteOutlined } from '@ant-design/icons';
 
 
 const home = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  
   const  todo = useSelector((state)=>state);
-  console.log(todo);
+  const dispatch = useDispatch();
+
+  const confirm = (id) => {
+    dispatch({type: 'DeleteTodo',payload:id});  
+    toast.success('task deleted successfully');
+  };
+  
+  const cancel = (e) => {
+    console.log(e);
+  };
+
+  const handleClear=()=>{
+    dispatch({type:'DeleteAll'});
+    toast.success('all task deleted successfully');
+  }
   return (
     <div className='container'>
         <div className='container-fluid'>
             <div className='d-flex justify-content-end p-5'>
+            <Space>
             <Link to="/add">
               <Button type='primary'>
                Add Todo
                 </Button>
                 </Link>
+                <Popconfirm
+                    title="Are you sure to delete all task?"
+                    onConfirm={handleClear}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                     >
+                <Button type='default'>
+                  clear
+                </Button>
+                </Popconfirm>
+                
+                </Space>
             </div>
             <div className='d-flex justify-content-center'>
             <table className="table table-hover text-center">
@@ -28,10 +58,11 @@ const home = () => {
                 <th scope="col">action</th>
               </tr>
             </thead>
-            <tbody>
+            
               {todo.length > 0 ? (
-                todo.map((todo, id) => (
-                  <tr key={id}>
+                todo.map((todo) => (
+                  <tbody>
+                  <tr key={todo.id}>
                     <td>{todo.title}</td>
                     <td>{todo.description}</td>
                     <td>
@@ -40,19 +71,30 @@ const home = () => {
                      <Button shape="circle" icon={<EditOutlined />} />
                      </Tooltip>
                       </Link>{'   '}
-                    <Tooltip title={todo.title}>
-                     <Button shape="circle" icon={<DeleteOutlined />} />
-                     
+                    <Tooltip>
+                     <Popconfirm
+                             title="Are you sure to delete this task?"
+                             onConfirm={()=>confirm(todo.id)}
+                             onCancel={cancel}
+                             okText="Yes"
+                             cancelText="No" >
+                    <Button shape="circle" icon={<DeleteOutlined />} />
+                    </Popconfirm> 
                      </Tooltip>
                     </td>
                   </tr>
+                   </tbody>
                 ))
               ) : (
-                <tr>
-                  <th>No Todo</th>
-                </tr>
+                    <tbody>
+                      <tr>
+                        <td>No</td>
+                        <td>Todo</td>
+                        <td>left</td>
+                      </tr>    
+                    </tbody>
               )}
-            </tbody>
+           
           </table>
             </div>
         </div>
