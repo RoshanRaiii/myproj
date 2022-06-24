@@ -4,10 +4,19 @@ import { useSelector,useDispatch } from 'react-redux';
 import {Link ,useParams, useNavigate} from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { toast } from 'react-hot-toast';
+
+
 const editform = () => {
    
     const {id}= useParams();
     const todos = useSelector((state) => state);
+    const [title, setTitle] = useState('');
+    const [description, setDescription]= useState('');
+
+
+    const dispatch = useDispatch();
+    const navigate =useNavigate();
+
     const currentTodo = todos.find((todo)=> todo.id === parseInt(id));
 
     useEffect(()=>{
@@ -16,13 +25,7 @@ const editform = () => {
         }
         ,[currentTodo]);
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription]= useState('');
-
-
-    const dispatch = useDispatch();
-const navigate =useNavigate();
-
+    
 
 const handleSubmit =(e)=>{
     if (!title || !description) {
@@ -48,7 +51,7 @@ const handleSubmit =(e)=>{
             <>
             <br/>
     <div className='justify-content-center row'>
-    <h1>Edit ToDo {id}</h1>
+    <h1>Edit ToDo </h1>
     </div>
   <br/>
   <div className=' justify-content-center row w-50 '>

@@ -9,7 +9,7 @@ import { EditOutlined ,DeleteOutlined } from '@ant-design/icons';
 //Read component for todo list
 const home = () => {
   
-  const  todo = useSelector((state)=>state);
+  const  todos = useSelector((state)=>state);
   const dispatch = useDispatch();
 
   const confirm = (id) => {
@@ -20,8 +20,7 @@ const home = () => {
   const cancel = (e) => {
     console.log(e);
   };
-  
- //handleClear is used for deleting all todo
+ //handleClear is used for deleting all the todo
   const handleClear=()=>{
     dispatch({type:'DeleteAll'});
     toast.success('all task deleted successfully');
@@ -60,10 +59,11 @@ const home = () => {
               </tr>
             </thead>
             
-              {todo.length > 0 ? (
-                todo.map((todo) => (
-                  <tbody>
-                  <tr key={todo.id}>
+              {todos.length > 0 ? (
+                todos.map((todo) => (
+                  <tbody key={todo.id}>
+
+                  <tr >
                     <td>{todo.title}</td>
                     <td>{todo.description}</td>
                     <td>
