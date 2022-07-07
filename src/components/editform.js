@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import {Link ,useParams, useNavigate} from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button,Modal,Tooltip} from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import { toast } from 'react-hot-toast';
 
 
-const editform = () => {
+const editform = (props) => {
    
-    const {id}= useParams();
+    const id= props.ID;
+    
+    const dispatch = useDispatch();    
     const todos = useSelector((state)=> (state));
-    const [title, setTitle] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [title,setTitle] = useState('');
     const [description, setDescription]= useState('');
-    const [date, setDate]=useState('');
+    const [date, setDate]= useState('');
 
-
-    const dispatch = useDispatch();
-    const navigate =useNavigate();
 
     const currentTodo = todos.find((todo)=> todo.id ===parseInt(id));
 
@@ -27,12 +27,14 @@ const editform = () => {
         }
         ,[currentTodo]);
 
-    
-
-const handleSubmit =(e)=>{
-    if (!title || !description || !date) {
-      return toast.error("Please fill in all fields!!");
-    };
+        const showModal = () => {
+          setIsModalVisible(true);
+        };
+      
+        const handleOk = (e) => {    
+          if (!title || !description || !date) {
+            return toast.error("Please fill in all fields!!");
+          }
    
      const data = {
          id : parseInt(id),
@@ -41,32 +43,32 @@ const handleSubmit =(e)=>{
          date,
         };
         dispatch({type:'UpdateTodo',payload:data});
-        navigate('/');
         toast.success("successfully updated");
         
+  };
+  
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
     
     return (
-    <div className='container col'>
-        
-                
-            <br/>
-    <div className='justify-content-center row'>
-    <h1>Edit ToDo </h1>
-    </div>
-  <br/>
-  <div className=' justify-content-center row w-50 '>
-  { currentTodo ? (
-    <>
-  <Form
-    name="basic"
-    initialValues={{
-      remember: true,
-    }}
-    autoComplete="off"
-  >
-    <Form.Item
+<div>
+<Tooltip title="edit">
+     <Button shape="circle" icon={<EditOutlined />} onClick={showModal}/>
+  </Tooltip>
+                     <Modal title="Edit ToDo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
+     
+     <Form
+
+name="basic"
+initialValues={{
+remember: true,
+}}
+autoComplete="off"
+>
+
+<Form.Item
       rules={[
         {
           required: true,
@@ -96,27 +98,9 @@ const handleSubmit =(e)=>{
       <Input  type="date" value={date} placeholder="Date" onChange={(e)=> setDate(e.target.value)}/>
     </Form.Item>
 
-    <Form.Item >
-      <Button type="primary" value="update todo" onClick={handleSubmit}>
-        Update
-      </Button>{' '}
-      <Link to="/" >
-        <Button>
-        Cancel
-      </Button>
-      </Link>
-    </Form.Item>
-  </Form>
-  </>
-  
-    
-        ):(
-            <>
-            {id}
-            </>
-        )}
-  </div>  
-  </div>
+</Form>
+</Modal>    
+     </div>
   )
 }
 

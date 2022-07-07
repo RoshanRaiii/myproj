@@ -3,10 +3,10 @@ import React from 'react';
 import Moment from 'react-moment';
 import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
 import { Button,Tooltip, Popconfirm, Space} from 'antd';
-import { EditOutlined ,DeleteOutlined } from '@ant-design/icons';
+import {DeleteOutlined } from '@ant-design/icons';
 import AddComponent from './Add';
+import EditComponent from './editform';
 //Read component for todo list
 const home = () => {
   
@@ -67,13 +67,14 @@ const home = () => {
                   <tr >
                     <td>{todo.title}</td>
                     <td>{todo.description}</td>
-                    <td><Moment format="DD/MM/YYYY">{todo.date}</Moment></td>
+                    <td><Moment format="LL">{todo.date}</Moment></td>
+                    <td align='center'> 
                     <td>
-                    <Link to={`/edit/${todo.id}`}>
-                    <Tooltip title="edit">
-                     <Button shape="circle" icon={<EditOutlined />} />
-                     </Tooltip>
-                      </Link>{'   '}
+              
+                    <EditComponent ID={todo.id} />
+              
+                    </td>
+                    <td>
                     <Tooltip>
                      <Popconfirm
                              title="Are you sure to delete this task?"
@@ -84,6 +85,8 @@ const home = () => {
                     <Button shape="circle" icon={<DeleteOutlined />} />
                     </Popconfirm> 
                      </Tooltip>
+                    </td>
+                    
                     </td>
                   </tr>
                    </tbody>

@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import "./App.css";
 import Navbar from './components/navbar';
 import Home from './components/home';
-import EditForm from './components/editform';
 import PageNotFound from './components/PageNotFound';
 const App=()=> {
   return (
@@ -13,7 +12,6 @@ const App=()=> {
       < Navbar />
       <Routes>
         <Route path='/' element={<Home />}/>
-        <Route path='/edit/:id' element={<EditForm />}/>
         <Route path='*'exact element={<PageNotFound/>}/>
       </Routes>
       <Toaster
