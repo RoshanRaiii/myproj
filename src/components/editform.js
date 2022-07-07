@@ -4,13 +4,15 @@ import { useSelector,useDispatch } from 'react-redux';
 import { Form, Input, Button,Modal,Tooltip} from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 const editform = (props) => {
    
     const id= props.ID;
     
-    const dispatch = useDispatch();    
+    const dispatch = useDispatch();
+    const navigate=useNavigate();    
     const todos = useSelector((state)=> (state));
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [title,setTitle] = useState('');
@@ -43,21 +45,23 @@ const editform = (props) => {
          date,
         };
         dispatch({type:'UpdateTodo',payload:data});
+        navigate('/');
         toast.success("successfully updated");
-        
+        setIsModalVisible(false);
   };
   
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  
 
     
     return (
-<div>
+      <>
 <Tooltip title="edit">
      <Button shape="circle" icon={<EditOutlined />} onClick={showModal}/>
   </Tooltip>
-                     <Modal title="Edit ToDo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
+                     <Modal title="Edit ToDo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
      
      <Form
 
@@ -100,7 +104,7 @@ autoComplete="off"
 
 </Form>
 </Modal>    
-     </div>
+     </>
   )
 }
 

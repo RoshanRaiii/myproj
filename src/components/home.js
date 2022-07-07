@@ -7,6 +7,7 @@ import { Button,Tooltip, Popconfirm, Space} from 'antd';
 import {DeleteOutlined } from '@ant-design/icons';
 import AddComponent from './Add';
 import EditComponent from './editform';
+import SearchBox from './SearchBox';
 //Read component for todo list
 const home = () => {
   
@@ -32,8 +33,10 @@ const home = () => {
   return (
     <div className='container'>
         <div className='container-fluid'>
-            <div className='d-flex justify-content-end p-5'>
-            <Space>
+            <div className='row p-5 '>
+              <div className='col'><SearchBox/></div>
+            <div className='col d-flex justify-content-end'><Space>
+            
             <AddComponent />
                 <Popconfirm
                     title="Are you sure to delete all task?"
@@ -48,7 +51,8 @@ const home = () => {
                 </Popconfirm>
                 
                 </Space>
-            </div>
+           </div>
+             </div>
             <div className='d-flex justify-content-center'>
             <table className="table table-hover text-center">
             <thead className="table-header bg-dark text-white">
@@ -69,12 +73,8 @@ const home = () => {
                     <td>{todo.description}</td>
                     <td><Moment format="LL">{todo.date}</Moment></td>
                     <td align='center'> 
-                    <td>
-              
                     <EditComponent ID={todo.id} />
-              
-                    </td>
-                    <td>
+                    {'   '}
                     <Tooltip>
                      <Popconfirm
                              title="Are you sure to delete this task?"
@@ -87,7 +87,6 @@ const home = () => {
                      </Tooltip>
                     </td>
                     
-                    </td>
                   </tr>
                    </tbody>
                 ))
