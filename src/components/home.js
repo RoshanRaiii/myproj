@@ -1,16 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
+import Moment from 'react-moment';
 import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { Button, Tooltip, Popconfirm, Space } from 'antd';
+import { Button,Tooltip, Popconfirm, Space} from 'antd';
 import { EditOutlined ,DeleteOutlined } from '@ant-design/icons';
-
+import AddComponent from './Add';
 //Read component for todo list
 const home = () => {
   
   const  todos = useSelector((state)=>state);
   const dispatch = useDispatch();
+
+
+
 
   const confirm = (id) => {
     dispatch({type: 'DeleteTodo',payload:id});  
@@ -30,11 +34,7 @@ const home = () => {
         <div className='container-fluid'>
             <div className='d-flex justify-content-end p-5'>
             <Space>
-            <Link to="/add">
-              <Button type='primary'>
-               Add Todo
-                </Button>
-                </Link>
+            <AddComponent />
                 <Popconfirm
                     title="Are you sure to delete all task?"
                     onConfirm={handleClear}
@@ -55,6 +55,7 @@ const home = () => {
               <tr>
                 <th scope="col">title</th>
                 <th scope="col">description</th>
+                <th scope='col'>date</th>
                 <th scope="col">action</th>
               </tr>
             </thead>
@@ -66,9 +67,10 @@ const home = () => {
                   <tr >
                     <td>{todo.title}</td>
                     <td>{todo.description}</td>
+                    <td><Moment format="DD/MM/YYYY">{todo.date}</Moment></td>
                     <td>
                     <Link to={`/edit/${todo.id}`}>
-                    <Tooltip title={todo.title}>
+                    <Tooltip title="edit">
                      <Button shape="circle" icon={<EditOutlined />} />
                      </Tooltip>
                       </Link>{'   '}

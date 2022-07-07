@@ -3,13 +3,13 @@ const initialState= [
         id: 0,
         title : "eat something",
         description : "brunch at office",
-
+        date: "2022-09-12",
     },
     {
         id: 1,
         title : "do something",
         description : "coding task",
-
+        date: "2022-07-28",
     }
 ];
 

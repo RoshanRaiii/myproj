@@ -9,33 +9,36 @@ import { toast } from 'react-hot-toast';
 const editform = () => {
    
     const {id}= useParams();
-    const todos = useSelector((state) => state);
+    const todos = useSelector((state)=> (state));
     const [title, setTitle] = useState('');
     const [description, setDescription]= useState('');
+    const [date, setDate]=useState('');
 
 
     const dispatch = useDispatch();
     const navigate =useNavigate();
 
-    const currentTodo = todos.find((todo)=> todo.id === parseInt(id));
+    const currentTodo = todos.find((todo)=> todo.id ===parseInt(id));
 
     useEffect(()=>{
          setTitle(currentTodo.title);
          setDescription(currentTodo.description);
+         setDate(currentTodo.date);
         }
         ,[currentTodo]);
 
     
 
 const handleSubmit =(e)=>{
-    if (!title || !description) {
+    if (!title || !description || !date) {
       return toast.error("Please fill in all fields!!");
-    }
+    };
    
      const data = {
          id : parseInt(id),
          title,
-         description
+         description,
+         date,
         };
         dispatch({type:'UpdateTodo',payload:data});
         navigate('/');
@@ -47,14 +50,15 @@ const handleSubmit =(e)=>{
     return (
     <div className='container col'>
         
-        { currentTodo ? (
-            <>
+                
             <br/>
     <div className='justify-content-center row'>
     <h1>Edit ToDo </h1>
     </div>
   <br/>
   <div className=' justify-content-center row w-50 '>
+  { currentTodo ? (
+    <>
   <Form
     name="basic"
     initialValues={{
@@ -82,6 +86,15 @@ const handleSubmit =(e)=>{
     >
       <Input placeholder={description} value={description} onChange={(e)=>setDescription(e.target.value)} size='lg'/>
     </Form.Item>
+    <Form.Item
+      rules={[
+        {
+          message: 'Please date!',
+        },
+      ]}
+    >
+      <Input  type="date" value={date} placeholder="Date" onChange={(e)=> setDate(e.target.value)}/>
+    </Form.Item>
 
     <Form.Item >
       <Button type="primary" value="update todo" onClick={handleSubmit}>
@@ -94,16 +107,18 @@ const handleSubmit =(e)=>{
       </Link>
     </Form.Item>
   </Form>
-  </div>
-            </>
-        ):(
-            <h1> this does not exist</h1>
-        )
-    }
+  </>
+  
     
+        ):(
+            <>
+            {id}
+            </>
+        )}
+  </div>  
   </div>
   )
 }
 
 
-export default editform;
+export default editform; 
