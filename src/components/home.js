@@ -53,13 +53,15 @@ const home = () => {
                 </Space>
            </div>
              </div>
+             
              <div className='d-flex justify-content-center'>
+             
              <div className='col-8'>
               {todos.length > 0 ? (
                 todos.map((todo) => (
-                  <Badge.Ribbon text={<Moment format="LL">{todo.date}</Moment>} color="red">
+                  <Badge.Ribbon key={todo.id} text={<Moment format="LL">{todo.date}</Moment>} color="red">
                   
-                  <Card key={todo.id} title={todo.title} size="small">
+                  <Card  title={todo.title} size="small">
                     <div className='row'>
                     <div className='col-8'>
                     <small>{todo.description}</small>
@@ -88,7 +90,7 @@ const home = () => {
                     
                     
                         <div className='col d-flex justify-content-center'>
-                          <h1>no todo</h1>
+                          <h2>no todo</h2>
                         </div>
               )}
            </div>

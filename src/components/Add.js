@@ -25,7 +25,7 @@ const  todo = useSelector((state)=>state);
     }
    
   const data = {
-         id : todo[todo.length -1].id+1,
+         id : todo.length+1,
          title,
          description,
          date,
