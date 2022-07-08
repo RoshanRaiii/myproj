@@ -3,7 +3,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { Button,Tooltip, Popconfirm, Space} from 'antd';
+import { Button,Tooltip, Popconfirm, Space,Card,Badge} from 'antd';
 import {DeleteOutlined } from '@ant-design/icons';
 import AddComponent from './Add';
 import EditComponent from './editform';
@@ -53,28 +53,20 @@ const home = () => {
                 </Space>
            </div>
              </div>
-            <div className='d-flex justify-content-center'>
-            <table className="table table-hover text-center">
-            <thead className="table-header bg-dark text-white">
-              <tr>
-                <th scope="col">title</th>
-                <th scope="col">description</th>
-                <th scope='col'>date</th>
-                <th scope="col">action</th>
-              </tr>
-            </thead>
-            
+             <div className='d-flex justify-content-center'>
+             <div className='col-8'>
               {todos.length > 0 ? (
                 todos.map((todo) => (
-                  <tbody key={todo.id}>
-
-                  <tr >
-                    <td>{todo.title}</td>
-                    <td>{todo.description}</td>
-                    <td><Moment format="LL">{todo.date}</Moment></td>
-                    <td align='center'> 
+                  <Badge.Ribbon text={<Moment format="LL">{todo.date}</Moment>} color="red">
+                  
+                  <Card key={todo.id} title={todo.title} size="small">
+                    <div className='row'>
+                    <div className='col-8'>
+                    <small>{todo.description}</small>
+                    </div>
+                    <div className='col-4 d-flex justify-content-end'>
+                    <Space>
                     <EditComponent ID={todo.id} />
-                    {'   '}
                     <Tooltip>
                      <Popconfirm
                              title="Are you sure to delete this task?"
@@ -85,23 +77,22 @@ const home = () => {
                     <Button shape="circle" icon={<DeleteOutlined />} />
                     </Popconfirm> 
                      </Tooltip>
-                    </td>
-                    
-                  </tr>
-                   </tbody>
+                     </Space>
+                     </div>
+                     </div>
+                  </Card>
+                </Badge.Ribbon>
+                
                 ))
               ) : (
-                    <tbody>
-                      <tr>
-                        <td>No</td>
-                        <td>Todo</td>
-                        <td>left</td>
-                      </tr>    
-                    </tbody>
+                    
+                    
+                        <div className='col d-flex justify-content-center'>
+                          <h1>no todo</h1>
+                        </div>
               )}
-           
-          </table>
-            </div>
+           </div>
+        </div>
         </div>
     </div>
   )
