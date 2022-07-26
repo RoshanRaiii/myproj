@@ -42,8 +42,8 @@ const  todo = useSelector((state)=>state);
 
   return (
     <div><Button type='primary' onClick={showModal}>
-    Add Todo +</Button>
-     <Modal title="Add ToDo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
+    Add</Button>
+     <Modal title="Add ToDo" visible={isModalVisible} okText={"Add"}  onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
      <Form
 
 name="basic"

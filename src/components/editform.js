@@ -59,7 +59,7 @@ const editform = (props) => {
 <Tooltip title="edit">
      <Button shape="circle" icon={<EditOutlined />} onClick={showModal}/>
   </Tooltip>
-  <Modal title="Edit ToDo" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} destroyOnClose={true}>
+  <Modal title="Edit ToDo" visible={isModalVisible} onOk={handleOk} okText={"Update"} onCancel={handleCancel} destroyOnClose={true}>
      
      <Form
 

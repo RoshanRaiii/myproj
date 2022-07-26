@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
+import React, { useState } from 'react';
 import Moment from 'react-moment';
 import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { Button,Tooltip, Popconfirm, Space,Card,Badge} from 'antd';
-import {DeleteOutlined } from '@ant-design/icons';
+import {Input, Button,Empty,Tooltip, Popconfirm, Space,Card,Badge} from 'antd';
+import {DeleteOutlined,SearchOutlined} from '@ant-design/icons';
 import AddComponent from './Add';
 import EditComponent from './editform';
-import SearchBox from './SearchBox';
+
+
 //Read component for todo list
 const home = () => {
   
   const  todos = useSelector((state)=>state);
   const dispatch = useDispatch();
-
-
+  const [search , setsearch]=useState("");
 
 
   const confirm = (id) => {
@@ -34,8 +34,9 @@ const home = () => {
     <div className='container'>
         <div className='container-fluid'>
             <div className='row p-5 '>
-              <div className='col'><SearchBox/></div>
-            <div className='col d-flex justify-content-end'><Space>
+              <div className='col d-flex justify-content-end'><Input className='w-50' type="text" placeholder='search....' suffix={<SearchOutlined />} onChange={(e)=>{setsearch(e.target.value);}} />
+              </div>
+            <div className='col d-flex justify-content-center'><Space>
             
             <AddComponent />
                 <Popconfirm
@@ -53,18 +54,35 @@ const home = () => {
                 </Space>
            </div>
              </div>
-             
+          
              <div className='d-flex justify-content-center'>
+              <div className='col-8'>
+             <Space
+             direction="vertical"
+             size="small"
+             style={{
+              display: 'flex',
+             }}
+
+             >
+
              
-             <div className='col-8'>
+             
               {todos.length > 0 ? (
-                todos.map((todo) => (
-                  <Badge.Ribbon key={todo.id} text={<Moment format="LL">{todo.date}</Moment>} color="red">
-                  
-                  <Card  title={todo.title} size="small">
+                // eslint-disable-next-line array-callback-return
+                todos.filter((todo)=>{
+                  if(search === " "){
+                    return todo
+                  }
+                  else if(todo.title.toLowerCase().includes(search.toLowerCase())){
+                      return todo
+                  }
+                  }).map((todo) => (
+                  <Badge.Ribbon key={todo.id} text={<Moment format="MMM,DD YYYY">{todo.date}</Moment>} color="#FF0063">
+                  <Card  title={todo.title} style={{borderColor:'#66BFBF'}} bodyStyle={{backgroundColor:'#FFFFFF',color:'#377D71'}} headStyle={{ backgroundColor:'#66BFBF',color:'#FFFFFF'}} size="small">
                     <div className='row'>
                     <div className='col-8'>
-                    <small>{todo.description}</small>
+                    <small><b>{todo.description}</b></small>
                     </div>
                     <div className='col-4 d-flex justify-content-end'>
                     <Space>
@@ -90,10 +108,11 @@ const home = () => {
                     
                     
                         <div className='col d-flex justify-content-center'>
-                          <h2>no todo</h2>
+                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                         </div>
               )}
-           </div>
+        </Space>
+        </div>
         </div>
         </div>
     </div>

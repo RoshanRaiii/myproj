@@ -1,8 +1,8 @@
 const initialState= [
     {
         id: 0,
-        title : "eat something",
-        description : "brunch at office",
+        title : "Write something",
+        description : "for todolist",
         date: "2022-09-12",
     },
     {
@@ -13,7 +13,7 @@ const initialState= [
     }
 ];
 
-const todoReducer = (state = initialState,action)=>{
+const todoReducer = ( state=initialState ,action)=>{
     switch(action.type){
         case 'AddTodo':
             state=[...state,action.payload];
