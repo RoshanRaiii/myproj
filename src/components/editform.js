@@ -4,7 +4,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { Form, Input, Button,Modal,Tooltip} from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { toast } from 'react-hot-toast';
-
+import { UpdateTodo } from '../reducer/todoReducer';
 
 
 const editform = (props) => {
@@ -12,14 +12,14 @@ const editform = (props) => {
     const id= props.ID;
     
     const dispatch = useDispatch();
-    const todos = useSelector((state)=> (state));
+    const todos = useSelector((state)=> (state.TODO));
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [title,setTitle] = useState('');
     const [description, setDescription]= useState('');
     const [date, setDate]= useState('');
+debugger;
 
-
-    const currentTodo = todos.find((todo)=> todo.id ===parseInt(id));
+    const currentTodo = todos.find((todo)=> todo.id ===(id));
 
     useEffect(()=>{
          setTitle(currentTodo.title);
@@ -38,12 +38,12 @@ const editform = (props) => {
           }
    
      const data = {
-         id : parseInt(id),
+         id : id,
          title,
          description,
          date,
         };
-        dispatch({type:'UpdateTodo',payload:data});
+        dispatch(UpdateTodo(data));
         toast.success("successfully updated");
         setIsModalVisible(false);
   };

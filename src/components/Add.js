@@ -1,9 +1,9 @@
 import React,{useState} from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { Button, Form, Input , Modal} from 'antd';
-
-
+import { AddTodo} from '../reducer/todoReducer';
+import { v4 as uuidv4 } from 'uuid';
 
 const Add = () => {
     
@@ -13,7 +13,7 @@ const Add = () => {
   const [title,setTitle] = useState('');
   const [description, setDescription]= useState('');
   const [date, setDate]= useState('');
-const  todo = useSelector((state)=>state);
+
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -25,12 +25,12 @@ const  todo = useSelector((state)=>state);
     }
    
   const data = {
-         id : todo.length+1,
+         id : uuidv4(),
          title,
          description,
          date,
         };
-        dispatch({type:'AddTodo',payload:data});
+        dispatch(AddTodo(data));
         toast.success("successfully added");
         setIsModalVisible(false);
   };

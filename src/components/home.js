@@ -7,18 +7,18 @@ import {Input, Button,Empty,Tooltip, Popconfirm, Space,Card,Badge} from 'antd';
 import {DeleteOutlined,SearchOutlined} from '@ant-design/icons';
 import AddComponent from './Add';
 import EditComponent from './editform';
-
+import {DeleteAll,DeleteTodo } from '../reducer/todoReducer';
 
 //Read component for todo list
 const home = () => {
-  
-  const  todos = useSelector((state)=>state);
+ debugger; 
+  const  todos = useSelector((state)=>(state.TODO));
   const dispatch = useDispatch();
   const [search , setsearch]=useState("");
 
 
   const confirm = (id) => {
-    dispatch({type: 'DeleteTodo',payload:id});  
+    dispatch(DeleteTodo(id));  
     toast.success('task deleted successfully');
   };
   
@@ -27,7 +27,7 @@ const home = () => {
   };
  //handleClear is used for deleting all the todo
   const handleClear=()=>{
-    dispatch({type:'DeleteAll'});
+    dispatch(DeleteAll());
     toast.success('all task deleted successfully');
   }
   return (
